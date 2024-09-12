@@ -1,0 +1,28 @@
+version: '3'
+services:
+  database:
+    container_name: database
+    build: ./hospital-management-database/
+    volumes:
+      - myapp:/var/lib/mysql
+  
+  backend:
+    container_name: backend
+    build: ./hospital-management-server/
+    depends_on:
+      - database
+
+  frontend:
+    container_name: frontend
+    build: ./hospital-management-frontend/
+    volumes:
+      - mymodule:/node_modules
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+
+volumes:
+  myapp:
+  mymodule:
+    
